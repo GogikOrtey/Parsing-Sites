@@ -9,17 +9,34 @@ import pandas as pd
 session = HTMLSession()
 
 # Отправляем GET-запрос к веб-странице
-response = session.get('http://books.toscrape.com/index.html ')
+response = session.get('http://books.toscrape.com/index.html')
 
 # # Записываем HTML-код в файл
 # with open('output.html', 'w', encoding='utf-8') as file:
 #     file.write(response)
 
 # Получаем список книг
-books = response.html.find('ol.row li')
+genres = response.html.find('div.side_categories ul li')
 
+genres_info = {'Название': [], 'Ссылка': []}
 
+for genre in genres:
+    # Получаем название жанра
+    title = genre.find('a', first=True).text
+    genres_info['Название'].append(title)
 
+    # Получаем название жанра
+    link = genre.find('a', first=True).attrs['href']
+    genres_info['Ссылка'].append(link)
+
+# Создаем DataFrame
+df = pd.DataFrame(genres_info)
+
+# Выводим DataFrame
+print(df)
+
+# Сохраняю датафрейм в файл:
+df.to_csv('output_genres.csv', index=False, encoding='utf-8')
 
 # # Создаем словарь для хранения информации о книгах
 # books_info = {'Название': [], 'Рейтинг': [], 'Ссылка': [], 'Цена': []}
