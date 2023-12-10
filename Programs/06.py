@@ -3,7 +3,7 @@ import pandas as pd
 import time
 
 # ---------------------------------------------- #
-#             Общий файл с кодом 2               #
+#      Загрузка всех книг, из всех жанров        #
 # ---------------------------------------------- #
 
 
@@ -106,7 +106,5 @@ for index, row in df_genre.iterrows():
 
 # Выводим все книги
 print(mainDF)
-
-# print(f"Количество книг: {mainDF.shape[0]}")
 
 mainDF.to_csv('mainDF.csv', index=False, encoding='utf-8')
